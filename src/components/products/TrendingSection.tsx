@@ -2,6 +2,8 @@
 import { useState } from "react";
 import ProductCard from "./ProductCard";
 import { dummyProducts } from "@/data/dummyData";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 interface TrendingSectionProps {
   title: string;
@@ -28,16 +30,27 @@ export default function TrendingSection({
     .slice(0, limit);
   
   return (
-    <section className="py-8">
+    <section className="py-6">
       <div className="container">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 border-b pb-2">
           <div>
-            <h2 className="text-2xl font-bold capitalize">{title}</h2>
-            {subtitle && <p className="text-muted-foreground mt-1">{subtitle}</p>}
+            <h2 className="text-xl font-semibold capitalize">{title}</h2>
+            {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
+          </div>
+          <div className="flex items-center gap-2 mt-2 sm:mt-0">
+            <Button variant="outline" size="sm" className="hidden md:flex">
+              <ArrowLeft className="h-4 w-4 mr-1" /> Previous
+            </Button>
+            <Button variant="outline" size="sm" className="hidden md:flex">
+              Next <ArrowRight className="h-4 w-4 ml-1" />
+            </Button>
+            <Button variant="outline" size="sm" className="bg-primary text-white hover:bg-primary/90">
+              VIEW ALL
+            </Button>
           </div>
         </div>
         
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
           {filteredProducts.map((product) => (
             <div key={product.id} className="slide-up">
               <ProductCard {...product} />

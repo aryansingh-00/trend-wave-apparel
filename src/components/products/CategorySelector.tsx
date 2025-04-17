@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 interface Category {
   id: string;
@@ -38,45 +39,51 @@ export default function CategorySelector({ categories, onSelect }: CategorySelec
   };
   
   return (
-    <div className="space-y-4 w-full py-4">
+    <div className="space-y-3 w-full py-2">
       <div className="w-full overflow-x-auto scrollbar-hide">
-        <div className="flex gap-3 min-w-max px-1">
+        <div className="flex gap-6 min-w-max px-1 justify-center">
           <button
             onClick={() => handleCategoryClick('all')}
-            className={`category-chip ${
-              selectedCategory === 'all' ? 'bg-primary text-primary-foreground' : 'bg-secondary'
-            } px-4 py-2 rounded-full text-sm font-medium transition-colors`}
+            className={`flex flex-col items-center transition-colors`}
           >
-            All
+            <div className={`h-14 w-14 rounded-full border flex items-center justify-center mb-1 ${
+              selectedCategory === 'all' ? 'border-primary text-primary' : 'border-muted'
+            }`}>
+              <span className="text-lg font-bold">All</span>
+            </div>
+            <span className="text-xs">All Items</span>
           </button>
           
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => handleCategoryClick(category.id)}
-              className={`category-chip ${
-                selectedCategory === category.id ? 'bg-primary text-primary-foreground' : 'bg-secondary'
-              } px-4 py-2 rounded-full text-sm font-medium transition-colors`}
+              className={`flex flex-col items-center transition-colors`}
             >
-              {category.name}
+              <div className={`h-14 w-14 rounded-full border flex items-center justify-center mb-1 ${
+                selectedCategory === category.id ? 'border-primary text-primary' : 'border-muted'
+              }`}>
+                <span className="text-lg font-bold">{category.name.charAt(0)}</span>
+              </div>
+              <span className="text-xs">{category.name}</span>
             </button>
           ))}
         </div>
       </div>
 
       {selectedCategory !== 'all' && (
-        <div className="w-full overflow-x-auto scrollbar-hide">
+        <div className="w-full overflow-x-auto scrollbar-hide border-t pt-3">
           <div className="flex gap-3 min-w-max px-1">
             {subCategories.map((subCategory) => (
-              <button
+              <Button
                 key={subCategory.id}
                 onClick={() => handleSubCategoryClick(subCategory.id)}
-                className={`category-chip ${
-                  selectedSubCategory === subCategory.id ? 'bg-primary text-primary-foreground' : 'bg-muted'
-                } px-4 py-2 rounded-full text-sm font-medium transition-colors`}
+                variant={selectedSubCategory === subCategory.id ? "default" : "outline"}
+                size="sm"
+                className="rounded-full"
               >
                 {subCategory.name}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
